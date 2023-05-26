@@ -28,7 +28,8 @@ void menuItems() {
 	cout << "11 : View Deliveries Status\n";
 	cout << "12 : Find Delivery\n";
 	cout << "13 : Remove Delivery\n";
-	cout << "14 : Exit\n";
+	cout << "14 : Add Customer to Order\n";
+	cout << "15 : Exit\n";
 }
 
 //Method to display status key for the user
@@ -326,6 +327,36 @@ int main() {
 			break;
 		}
 		case 14: {
+
+			// Store user input
+			int customerNumber;
+
+			cout << "Please enter the customer number you wish to add ";
+			cin >> customerNumber;
+
+			//This uses the find fucntion to search for a customer within the hash table that has an 
+			// ID of cin that is entered, this returns a pointer to the customer object
+			Customer* customer = custTable->Find(customerNumber);
+
+			// Check if the customer obejct exists
+			if (customer != NULL) {
+				// Create a new order object using the customers last name and customer number.
+				Order* order = new Order(customerNumber, customer->lName);
+
+				// Target id prioity queue stores the new order 
+				targetIDs->Insert(order);
+
+				cout << "This order has been added :\n" << "ID: " <<
+					customer->custNumber << " Surname : " << customer->lName << "\n";
+			}
+			else {
+				cout << "Customer ID does not exist in record\n";
+			}
+
+			break;
+		}
+
+		case 15: {
 			//Exit the switch
 			return 0;
 		}
@@ -336,7 +367,7 @@ int main() {
 		}
 		}
 	} 
-	while (menuOption != 14);
+	while (menuOption != 15);
 		
 
 	return 0;
